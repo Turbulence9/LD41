@@ -12,7 +12,7 @@ function update() {
     //add new tile at begining of each lane
     if (count % 32 === 0) {
       for (let i = 0; i < lanes.length; i++) {
-        platform[lanes[i]].push({x:1024,y:laneHeight[i],tilePos:getRandomTile(10),item:null});
+        platform[lanes[i]].push({x:1024,y:laneHeight[i],tilePos:getRandomTile(percent),item:null});
       }
     }
     //shift tiles left and draw them
@@ -42,13 +42,19 @@ function update() {
     if (count % 4 === 0) {
       playerFrame < 5 ? playerFrame++ : playerFrame = 0;
     }
+    if (count % 100 === 0) {
+      percent+=2;
+    }
     if (platform[lanes[player.lane]][2].item == 0) {
       player.lane--;
     }
     if (platform[lanes[player.lane]][2].item == 1) {
       player.lane++;
     }
-    if (player.lane < 0 || player.lane > 3 || platform[lanes[player.lane]][2].tilePos > 15 && (platform[lanes[player.lane]][2].item != 2 && platform[lanes[player.lane]][2].item != 3)) {
+    if (player.lane < 0 || player.lane > 3 ||
+      (platform[lanes[player.lane]][2].tilePos == 16 && platform[lanes[player.lane]][2].item != 3) ||
+      (platform[lanes[player.lane]][2].tilePos == 17 && platform[lanes[player.lane]][2].item != 2)
+    ) {
       level = 'end';
     }
   }
@@ -83,12 +89,16 @@ document.addEventListener("keydown", function(e) {
       for (let j = 0; j < curLane.length; j++) {
         curTile = curLane[j];
         if (curTile.x > 288) {
-          if((curTile.tilePos <= 15 || hand[i] > 1) && curTile.item == null) {
+          if((curTile.tilePos <= 15 ||
+          (curTile.tilePos == 16 && hand[i] == 3) ||
+          (curTile.tilePos == 17 && hand[i] == 2)) &&
+          curTile.item == null
+          ) {
             curTile.item = hand[i];
             hand[i] = null;
             setTimeout(()=> {
               hand[i] = getRandom(0,4);
-            }, 2000);
+            }, 1000);
           }
           break;
         }

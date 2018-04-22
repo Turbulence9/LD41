@@ -42,7 +42,7 @@ function update() {
     if (count % 4 === 0) {
       playerFrame < 5 ? playerFrame++ : playerFrame = 0;
     }
-    if (count % 100 === 0) {
+    if (count % 1000 === 0) {
       percent+=2;
     }
     if (platform[lanes[player.lane]][2].item == 0) {

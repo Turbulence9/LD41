@@ -20,7 +20,7 @@ let lanes = ['a','b','c','d'];
 let laneHeight = [128,192,256,320];
 let waitingKeys = [];
 let level = 'game';
-let percent = 10;
+let percent = 6;
 
 function getRandom(min,max) {
   return Math.floor(Math.random() * (max - min) + min);

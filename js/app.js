@@ -42,8 +42,8 @@ function update() {
     if (count % 4 === 0) {
       playerFrame < 5 ? playerFrame++ : playerFrame = 0;
     }
-    if (count % 1000 === 0) {
-      percent+=2;
+    if (count % 2000 === 0) {
+      percent+=1;
     }
     if (platform[lanes[player.lane]][2].item == 0) {
       player.lane--;

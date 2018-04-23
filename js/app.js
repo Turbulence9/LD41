@@ -30,7 +30,7 @@ function update() {
     }
     ctx.drawImage(inserterSlide,0,0);
     ctx.drawImage(inserterImg,inserter.x,laneHeight[inserter.lane]-20);
-    ctx.drawImage(playerImg,playerFrame*64,0,64,64,player.x,laneHeight[player.lane],64,64);
+    ctx.drawImage(jumping?playerJump:playerImg,playerFrame*64,0,64,64,player.x,laneHeight[player.lane],64,64);
     for (let i = 0; i < hand.length; i++) {
       if (hand[i] != null) {
         ctx.drawImage(cards,hand[i]*128,0,128,160,160+(192*i),416,128,160);
@@ -39,21 +39,49 @@ function update() {
     count++;
     ctx.font = "24px Arial";
     ctx.fillText(Math.floor(count/10),784,50);
-    if (count % 4 === 0) {
-      playerFrame < 5 ? playerFrame++ : playerFrame = 0;
+    if (count % 3 === 0) {
+      if (jumping) {
+        if (landingCount > 4) {
+          if (playerFrame < 4) {
+            playerFrame++;
+          }
+        } else {
+          playerFrame++;
+        }
+        landingCount--;
+      } else {
+        playerFrame < 13 ? playerFrame++ : playerFrame = 0;
+      }
     }
+    if (landingCount === 0) {
+      jumping = false;
+    }
+
     if (count % 1000 === 0) {
       percent+=1;
     }
     //Player Tile
     let pt = platform[lanes[player.lane]][2];
-    if (pt.item == 0) {
+
+    if(pt.item == 4 && !jumping) {
+      jumping = true;
+      playerFrame = 0;
+      landingCount = 44;
+    }
+
+    if(pt.item == 5 && !jumping) {
+      jumping = true;
+      playerFrame = 0;
+      landingCount = 23;
+    }
+
+    if (pt.item == 0 && !jumping) {
       player.lane--;
     }
-    if (platform[lanes[player.lane]] && pt.item == 1) {
+    if (platform[lanes[player.lane]] && pt.item == 1 && !jumping) {
       player.lane++;
     }
-    if (player.lane < 0 || player.lane > 3 || (pt.tilePos > 15 && !placementRules[pt.tilePos].includes(pt.item))) {
+    if (player.lane < 0 || player.lane > 3 || (pt.tilePos > 15 && !placementRules[pt.tilePos].includes(pt.item) && !jumping)) {
       level = 'end';
     }
   }
@@ -95,7 +123,7 @@ document.addEventListener("keydown", function(e) {
         curTile.item = hand[i];
         hand[i] = null;
         setTimeout(()=> {
-          hand[i] = getRandom(0,4);
+          hand[i] = getRandom(0,6);
         }, 1000);
       }
     }

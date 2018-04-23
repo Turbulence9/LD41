@@ -6,8 +6,10 @@ let inserterSlide = new Image(1024, 640);
 inserterSlide.src = './assets/inserterSlide.png';
 let inserterImg = new Image(96, 96);
 inserterImg.src = './assets/inserter.png';
-let playerImg = new Image(384, 64);
+let playerImg = new Image(896, 64);
 playerImg.src = './assets/player.png';
+let playerJump = new Image(576, 64);
+playerJump.src = './assets/jump.png';
 let cards = new Image(768, 160);
 cards.src = './assets/cards.png';
 let items = new Image(128, 64);
@@ -21,6 +23,8 @@ let laneHeight = [128,192,256,320];
 let waitingKeys = [];
 let level = 'game';
 let percent = 6;
+let jumping = false;
+let landingCount = 0;
 
 let placementRules = {
   16 : [3],
@@ -48,7 +52,7 @@ let platform = {
 
 let player = {x:54,lane:getRandom(0,4)};
 
-let hand = [getRandom(0,4),getRandom(0,4),getRandom(0,4),getRandom(0,4)];
+let hand = [getRandom(0,6),getRandom(0,6),getRandom(0,6),getRandom(0,6)];
 
 let inserter = {x:300,lane:getRandom(0,4)};
 

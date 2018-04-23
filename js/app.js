@@ -29,7 +29,7 @@ function update() {
       });
     }
     ctx.drawImage(inserterSlide,0,0);
-    ctx.drawImage(inserterImg,inserter.x,laneHeight[inserter.lane]-16);
+    ctx.drawImage(inserterImg,inserter.x,laneHeight[inserter.lane]-20);
     ctx.drawImage(playerImg,playerFrame*64,0,64,64,player.x,laneHeight[player.lane],64,64);
     for (let i = 0; i < hand.length; i++) {
       if (hand[i] != null) {
@@ -37,24 +37,23 @@ function update() {
       }
     }
     count++;
-    ctx.font = "30px Arial";
-    ctx.fillText(Math.floor(count/10),776,48);
+    ctx.font = "24px Arial";
+    ctx.fillText(Math.floor(count/10),784,50);
     if (count % 4 === 0) {
       playerFrame < 5 ? playerFrame++ : playerFrame = 0;
     }
-    if (count % 2000 === 0) {
+    if (count % 1000 === 0) {
       percent+=1;
     }
-    if (platform[lanes[player.lane]][2].item == 0) {
+    //Player Tile
+    let pt = platform[lanes[player.lane]][2];
+    if (pt.item == 0) {
       player.lane--;
     }
-    if (platform[lanes[player.lane]][2].item == 1) {
+    if (platform[lanes[player.lane]] && pt.item == 1) {
       player.lane++;
     }
-    if (player.lane < 0 || player.lane > 3 ||
-      (platform[lanes[player.lane]][2].tilePos == 16 && platform[lanes[player.lane]][2].item != 3) ||
-      (platform[lanes[player.lane]][2].tilePos == 17 && platform[lanes[player.lane]][2].item != 2)
-    ) {
+    if (player.lane < 0 || player.lane > 3 || (pt.tilePos > 15 && !placementRules[pt.tilePos].includes(pt.item))) {
       level = 'end';
     }
   }
@@ -83,28 +82,25 @@ document.addEventListener("keydown", function(e) {
 
   //Q W E R
   let cardCodes = [81,87,69,82];
+  //Card Placement
   for ( let i = 0; i < cardCodes.length; i++) {
-    if(e.keyCode === cardCodes[i] && !waitingKeys.includes(cardCodes[i])) {
-      let curLane = platform[lanes[inserter.lane]];
-      for (let j = 0; j < curLane.length; j++) {
-        curTile = curLane[j];
-        if (curTile.x > 288) {
-          if((curTile.tilePos <= 15 ||
-          (curTile.tilePos == 16 && hand[i] == 3) ||
-          (curTile.tilePos == 17 && hand[i] == 2)) &&
-          curTile.item == null
-          ) {
-            curTile.item = hand[i];
-            hand[i] = null;
-            setTimeout(()=> {
-              hand[i] = getRandom(0,4);
-            }, 1000);
-          }
-          break;
-        }
+    if(e.keyCode === cardCodes[i] && !waitingKeys.includes(cardCodes[i]) && hand[i] != null) {
+      let curTile;
+      if (platform[lanes[inserter.lane]][6].x > 288) {
+        curTile = platform[lanes[inserter.lane]][6];
+      } else {
+        curTile = platform[lanes[inserter.lane]][7];
+      }
+      if ( (curTile.tilePos <= 15 || placementRules[curTile.tilePos].includes(hand[i])) && curTile.item == null)  {
+        curTile.item = hand[i];
+        hand[i] = null;
+        setTimeout(()=> {
+          hand[i] = getRandom(0,4);
+        }, 1000);
       }
     }
   }
+
   if(!waitingKeys.includes(e.keyCode)) {
     waitingKeys.push(e.keyCode);
   }

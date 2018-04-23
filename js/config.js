@@ -22,6 +22,11 @@ let waitingKeys = [];
 let level = 'game';
 let percent = 6;
 
+let placementRules = {
+  16 : [3],
+  17 : [2],
+}
+
 function getRandom(min,max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -45,7 +50,7 @@ let player = {x:54,lane:getRandom(0,4)};
 
 let hand = [getRandom(0,4),getRandom(0,4),getRandom(0,4),getRandom(0,4)];
 
-let inserter = {x:304,lane:getRandom(0,4)};
+let inserter = {x:300,lane:getRandom(0,4)};
 
 for (let i = 0; i < lanes.length; i++) {
   for (let j = 0; j <= 960; j+=64) {

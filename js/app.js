@@ -123,7 +123,7 @@ document.addEventListener("keydown", function(e) {
         curTile.item = hand[i];
         hand[i] = null;
         setTimeout(()=> {
-          hand[i] = getRandom(0,6);
+          hand[i] = getRandomCard();
         }, 1000);
       }
     }

@@ -16,6 +16,16 @@ let items = new Image(128, 64);
 items.src = './assets/items.png';
 let gameOver = new Image(448, 200);
 gameOver.src = './assets/gameOver.png';
+let sound = document.getElementById("sound");
+sound.loop = false;
+sound.play();
+let sound2 = document.getElementById("sound2");
+sound2.loop = true;
+sound.onended = function() {
+    console.log('over');
+    sound2.play();
+};
+
 let count = 0;
 let playerFrame = 0;
 let lanes = ['a','b','c','d'];
@@ -36,10 +46,19 @@ function getRandom(min,max) {
 }
 
 function getRandomTile(hazardPercent) {
-  if ( getRandom(0,100) <= hazardPercent) {
+  if (getRandom(0,100) <= hazardPercent) {
     return getRandom(16,18);
   } else {
     return getRandom(0,16);
+  }
+}
+
+function getRandomCard() {
+  let specialPercent = 15;
+  if (getRandom(0,100) <= specialPercent) {
+    return getRandom(4,6);
+  } else {
+    return getRandom(0,4);
   }
 }
 
@@ -52,7 +71,7 @@ let platform = {
 
 let player = {x:54,lane:getRandom(0,4)};
 
-let hand = [getRandom(0,6),getRandom(0,6),getRandom(0,6),getRandom(0,6)];
+let hand = [getRandomCard(),getRandomCard(),getRandomCard(),getRandomCard()];
 
 let inserter = {x:300,lane:getRandom(0,4)};
 

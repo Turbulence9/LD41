@@ -17,7 +17,7 @@ cards.src = './assets/cards.png';
 let items = new Image(128, 64);
 items.src = './assets/items.png';
 let gameOver = new Image(448, 200);
-gameOver.src = './assets/gameOver.png';
+gameOver.src = './assets/gameover.png';
 let sound = document.getElementById("sound");
 sound.loop = false;
 sound.play();

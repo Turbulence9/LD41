@@ -7,6 +7,13 @@ canvas.width = windowedWidth;
 canvas.height = windowedHeight;
 
 function update() {
+  if (level == 'title') {
+    ctx.drawImage(title,0,0);
+    if (waitingKeys.includes(32)) {
+      console.log('ez');
+      level = 'game';
+    }
+  }
   if (level == 'game') {
     ctx.drawImage(background,0,0);
     //add new tile at begining of each lane

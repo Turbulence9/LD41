@@ -1,5 +1,7 @@
 let background = new Image(1024, 640);
 background.src = './assets/background.png';
+let title = new Image(1024, 640);
+title.src = './assets/title.png';
 let tiles = new Image(1024, 64);
 tiles.src = './assets/tiles.png';
 let inserterSlide = new Image(1024, 640);
@@ -31,7 +33,7 @@ let playerFrame = 0;
 let lanes = ['a','b','c','d'];
 let laneHeight = [128,192,256,320];
 let waitingKeys = [];
-let level = 'game';
+let level = 'title';
 let percent = 6;
 let jumping = false;
 let landingCount = 0;

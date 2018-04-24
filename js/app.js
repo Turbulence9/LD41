@@ -65,7 +65,7 @@ function update() {
     }
 
     if (count % 1000 === 0) {
-      percent+=1;
+      percent+=2;
     }
     //Player Tile
     let pt = platform[lanes[player.lane]][2];

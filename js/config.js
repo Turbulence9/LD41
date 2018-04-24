@@ -56,7 +56,7 @@ function getRandomTile(hazardPercent) {
 }
 
 function getRandomCard() {
-  let specialPercent = 15;
+  let specialPercent = 10;
   if (getRandom(0,100) <= specialPercent) {
     return getRandom(4,6);
   } else {

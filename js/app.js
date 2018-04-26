@@ -10,7 +10,6 @@ function update() {
   if (level == 'title') {
     ctx.drawImage(title,0,0);
     if (waitingKeys.includes(32)) {
-      console.log('ez');
       level = 'game';
     }
   }
@@ -95,7 +94,10 @@ function update() {
   if (level == 'end') {
     ctx.drawImage(gameOver,288,180);
     if (waitingKeys.includes(32)) {
-      location.reload();
+      setTimeout(()=> {
+        level = 'title';
+      }, 200);
+      reset()
     }
   }
   requestAnimationFrame(update);

@@ -24,7 +24,6 @@ sound.play();
 let sound2 = document.getElementById("sound2");
 sound2.loop = true;
 sound.onended = function() {
-    console.log('over');
     sound2.play();
 };
 
@@ -41,6 +40,22 @@ let landingCount = 0;
 let placementRules = {
   16 : [3],
   17 : [2],
+}
+
+function reset() {
+  count = 0;
+  platform = {
+    a : [],
+    b : [],
+    c : [],
+    d : []
+  };
+  player = {x:54,lane:getRandom(0,4)};
+  for (let i = 0; i < lanes.length; i++) {
+    for (let j = 0; j <= 1024; j+=64) {
+      platform[lanes[i]].push({x:j,y:laneHeight[i],tilePos:getRandom(0,16),item:null});
+    }
+  }
 }
 
 function getRandom(min,max) {
